@@ -33,16 +33,18 @@
                     <li class="nav-item" role="presentation">
                         <a class="nav-link active" href="#contact">Contact Us</a>
                     </li>
+                  {% if request.user.is_authenticated %}
                     <li class="nav-item" role="presentation">
-                      <a class="nav-link active" href="manage-appointments.html">Manage</a>
+                      <a class="nav-link active" href="{% url 'manage-appointments' %}">Manage</a>
                   </li>
                   <li class="nav-item" role="presentation">
-                    <a href="manage-appointments.html" style="float: left;cursor:pointer;" aria-expanded="true" title="You Have 6 New Appointments">
+                    <a href="{% url 'manage-appointments' %}" style="float: left;cursor:pointer;" aria-expanded="true" title="You Have 6 New Appointments">
                       <i class="far fa-bell" style="font-size: 20px; float: left; color: black">
                       </i>
                   </a>
                   <span class="badge badge-danger">6</span>
                 </li>
+                  {% endif %}
                   
                     <!-- <li class="dropdown"><a class="dropdown-toggle nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false" href="#">Dropdown </a>
                         <div class="dropdown-menu" role="menu"><a class="dropdown-item" role="presentation" href="#">First Item</a><a class="dropdown-item" role="presentation" href="#">Second Item</a><a class="dropdown-item" role="presentation" href="#">Third Item</a></div>

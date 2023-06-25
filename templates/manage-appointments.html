@@ -1,18 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'base.html' %}
+{% load static %}
 
-<head>
+
+{% block head %}
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <title>Family Doctor: Manage Appointment</title>
-  <!-- Bootstrap core CSS -->
-  <link href="css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
-  <link rel="stylesheet" href="css/styles.css" />
-</head>
-
-<style>
+{% endblock head %}
+  
+{% block style %}
   .card-margin {
       margin-bottom: 1.875rem;
   }
@@ -347,10 +344,10 @@
       outline: 0;
       box-shadow: none
   }
-</style>
+{% endblock style %}
 
-<body>
 
+{% block content %}
 
     <div class="container mt-5">
         <div class="col-11 text-center mt-4 mb-4">
@@ -359,25 +356,26 @@
             </h3>
         </div>
         <div class="row">
+            {% for appointment in object_list %}
             <div class="col-lg-4">
                 <div class="card card-margin">
                     <div class="card-header no-border">
-                        <h5 class="card-title">Name Surname</h5>
+                      <h5 class="card-title">{{appointment.first_name}} {{appointment.last_name}}</h5>
                     </div>
                     <div class="card-body pt-0">
                         <div class="widget-49">
                             <div class="widget-49-title-wrapper">
                                 <div class="widget-49-date-primary">
-                                    <span class="widget-49-date-day">09</span>
-                                    <span class="widget-49-date-month">apr</span>
+                                  <span class="widget-49-date-day">{{appointment.sent_date|date:"d"}}</span>
+                                    <span class="widget-49-date-month">{{appointment.sent_date|date:"M"}}</span>
                                 </div>
                                 <div class="widget-49-meeting-info">
-                                    <span class="widget-49-pro-title">email@email.com</span>
-                                    <span class="widget-49-meeting-time">+1 0356 5656 5 656</span>
+                                  <span class="widget-49-pro-title">{{appointment.email}}</span>
+                                  <span class="widget-49-meeting-time">{{appointment.mobile}}</span>
                                 </div>
                             </div>
                             <div class="widget-49-meeting-points">
-                                <span>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quam eum magnam veniam nisi laudantium ea. Esse odio corporis adipisci ex.</span>
+                              <span>{{ appointment.answer }}</span>
                             </div>
                             <hr class="w-100">
                             <div class="form-group">
@@ -390,94 +388,27 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4">
-                <div class="card card-margin">
-                    <div class="card-header no-border">
-                        <h5 class="card-title">Name Surname</h5>
-                    </div>
-                    <div class="card-body pt-0">
-                        <div class="widget-49">
-                            <div class="widget-49-title-wrapper">
-                                <div class="widget-49-date-primary">
-                                    <span class="widget-49-date-day">09</span>
-                                    <span class="widget-49-date-month">apr</span>
-                                </div>
-                                <div class="widget-49-meeting-info">
-                                    <span class="widget-49-pro-title">email@email.com</span>
-                                    <span class="widget-49-meeting-time">+1 0356 5656 5 656</span>
-                                </div>
-                            </div>
-                            <div class="widget-49-meeting-points">
-                                <span>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quam eum magnam veniam nisi laudantium ea. Esse odio corporis adipisci ex.</span>
-                            </div>
-                            <hr class="w-100">
-                            <div class="form-group">
-                                <input type="date" name="date" class="form-control mb-2" 
-                                    placeholder="dd-mm-yyyy" value=""
-                                    min="1997-01-01" max="2030-12-31">
-                                <input class="btn-block btn-primary form-control" type="submit" value="Accept">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="card card-margin">
-                    <div class="card-header no-border">
-                        <h5 class="card-title">Name Surname</h5>
-                    </div>
-                    <div class="card-body pt-0">
-                        <div class="widget-49">
-                            <div class="widget-49-title-wrapper">
-                                <div class="widget-49-date-primary">
-                                    <span class="widget-49-date-day">09</span>
-                                    <span class="widget-49-date-month">apr</span>
-                                </div>
-                                <div class="widget-49-meeting-info">
-                                    <span class="widget-49-pro-title">email@email.com</span>
-                                    <span class="widget-49-meeting-time">+1 0356 5656 5 656</span>
-                                </div>
-                            </div>
-                            <div class="widget-49-meeting-points">
-                                <span>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quam eum magnam veniam nisi laudantium ea. Esse odio corporis adipisci ex.</span>
-                            </div>
-                            <hr class="w-100">
-                            <div class="form-group">
-                                <input type="date" name="date" class="form-control mb-2" 
-                                    placeholder="dd-mm-yyyy" value=""
-                                    min="1997-01-01" max="2030-12-31">
-                                <input class="btn-block btn-primary form-control" type="submit" value="Accept">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            {% endfor %}
         </div>
 
         <div class="wrapper">
             <nav aria-label="Page navigation example">
                 <ul class="pagination">
-                    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item"><a class="page-link" href="#">4</a></li>
-                    <li class="page-item"><a class="page-link" href="#">5</a></li>
-                    <li class="page-item"><a class="page-link" href="#">6</a></li>
-                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                    {% if page_obj.has_previous %}
+                      <li class="page-item"><a class="page-link" href="{% url 'manage-appointments' %}?page={{page_obj.previous_page_number}}#">Previous</a></li>
+                    {% endif %}
+                    {% for page in page_obj.paginator.page_range %}
+                      {% if page <= page_obj.number|add:1 and page >= page_obj.number|add:-1 %}
+                        <li class="page-item"><a class="page-link" href="{% url 'manage-appointments' %}?page={{page}}">{{page}}</a></li>
+                      {% endif %}
+                    {% endfor %}
+                    {% if page_obj.has_next %}
+                      <li class="page-item"><a class="page-link" href="{% url 'manage-appointments' %}?page={{page_obj.next_page_number}}#">Next</a></li>
+                    {% endif %}
                 </ul>
             </nav>
         </div>
 
 
-  <!--  JQuery  -->
-  <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
-  <!--  Bootstrap tooltips  -->
-  <script type="text/javascript" src="js/popper.min.js"></script>
-  <!--  Bootstrap core JavaScript  -->
-  <script type="text/javascript" src="js/bootstrap.min.js"></script>
+ {% endblock content %}
 
-
-</body>
-
-</html>

@@ -1,9 +1,11 @@
 from django.http import HttpResponseRedirect
 from django.template.response import HttpResponse
 from django.views.generic.base import TemplateView
+from django.views.generic.list import ListView
 from django.core.mail import EmailMessage
 from django.conf import settings
 from django.contrib import messages
+from .models import Appointment
 
 
 class HomeTemplateView(TemplateView):
@@ -36,6 +38,28 @@ class AppointmentTemplateView(TemplateView):
         mobile = request.POST.get("mobile")
         answer = request.POST.get("answer")
 
+        appointment = Appointment.objects.create(
+            first_name=first_name,
+            last_name=last_name,
+            email=email,
+            mobile=mobile,
+            answer=answer,
+        )
+        appointment.save()
+
         messages.add_message(request, messages.SUCCESS,
-                             "Your request was saved successfully")
+                             f"Your request was saved successfully. Thanks {first_name} {last_name} for making appointment!")
+
         return HttpResponseRedirect(request.path)
+
+
+class ManageAppointmentListView(ListView):
+    template_name = "manage-appointments.html"
+    login_required = True
+    paginate_by = 3
+    model = Appointment
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        return context
