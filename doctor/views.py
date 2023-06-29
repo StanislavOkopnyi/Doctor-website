@@ -1,3 +1,5 @@
+from datetime import datetime
+from django.forms.renderers import get_template
 from django.http import HttpResponseRedirect
 from django.template.response import HttpResponse
 from django.views.generic.base import TemplateView
@@ -58,6 +60,33 @@ class ManageAppointmentListView(ListView):
     login_required = True
     paginate_by = 3
     model = Appointment
+
+    def post(self, request):
+        date = request.POST.get("date")
+        appointment_id = request.POST.get("appointment-id")
+        appointment = Appointment.objects.get(id=appointment_id)
+        appointment.accepted = True
+        appointment.accepted_date = datetime.now()
+        appointment.save()
+
+        data = {
+            "first_name": appointment.first_name,
+            "date": date,
+        }
+        message = get_template("email.html").render(data)
+        email = EmailMessage(
+            "About your appointment.",
+            message,
+            settings.EMAIL_HOST_USER,
+            [appointment.email]
+        )
+        email.content_subtype = "html"
+        email.send()
+
+        messages.add_message(request, messages.SUCCESS,
+                             f"{date}")
+
+        return HttpResponseRedirect(request.path)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

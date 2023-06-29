@@ -12,7 +12,7 @@ class Appointment(models.Model):
     answer = models.TextField()
     sent_date = models.DateField(auto_now_add=True)
     accepted = models.BooleanField(default=False)
-    accepted_dat = models.DateField(auto_now_add=False, null=True)
+    accepted_date = models.DateField(auto_now_add=False, null=True)
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
